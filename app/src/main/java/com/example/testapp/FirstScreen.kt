@@ -10,24 +10,24 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.test_fragment_first_screen.*
+import kotlinx.android.synthetic.main.test_fragment_first_screen.view.*
 
 class FirstScreen : Fragment() {
-    private var adapter: FirstScreenAdapter? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.test_fragment_first_screen, container, false)
-    }
-
-    override fun onStart() {
-        super.onStart()
+        val rootView = inflater.inflate(R.layout.test_fragment_first_screen, container, false)
         if (adapter == null) adapter = FirstScreenAdapter(::navigateToSecondScreen)
-        dummyList.layoutManager = LinearLayoutManager(this.context)
-        dummyList.adapter = adapter
+        rootView.dummyList.layoutManager = LinearLayoutManager(this.context)
+        rootView.dummyList.adapter = adapter
+        return rootView
     }
 
     private fun navigateToSecondScreen() {
         NavHostFragment.findNavController(this as Fragment)
             .navigate(R.id.action_test_fragment_1_to_test_fragment_2)
+    }
+
+    companion object {
+        private var adapter: FirstScreenAdapter? = null
     }
 }
 
